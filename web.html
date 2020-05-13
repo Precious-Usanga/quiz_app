@@ -16,32 +16,37 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-center h1">
-                            Welcome to <br> Web Quiz Application
+                             Web Quiz
                         </div>
+                        <p class="text-center h4">Attempt all questions carefully.. They're Easy!</p>
                     </div>
                 </div>
                 <di class="row">
-                    <div class="col-12">
-                        <div class="card my-5 py-5">
+                    <div class="col-12 endQuiz">
+                        <div>YOUR SCORE: <span class="badge badge-light score"></span> </div>
+
+                        <button type="button" class="btn btn-primary">
+                            Question <span class="badge badge-light currentQ"></span> of <span class="totalQ"></span>
+                        </button>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="card my-5">
                             <form >
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Please Choose Quiz Category</h5>
+                                <div class="card-body text-center py-5 bg-light">
+                                    <h5 class="card-title question" style="font-size:2rem;"></h5>
                                       <div class="row justify-content-center">
-                                          <div class="col-md-6">
-                                              <div class="form-group">
-                                                  <select class="form-control" id="quizCategory" name="quizCategory" onchange="getCategory(this)">
-                                                    <option value=''>--SELECT QUIZ--</option>
-                                                    <option value="web">Web Development</option>
-                                                    <option value="football">Football</option>
-                                                    <option value="music">Music</option>
-                                                  </select>
-                                              </div>
+                                          <div class="col-md-9">
+                                             <div class="row py-3 my-3" id="options">
+                                                
+                                             </div>
                                           </div>
                                       </div>
-                                    <a href="" id="enterQuizBtn" class="btn btn-primary">Enter Quiz</a>
+                                    <a id="nextQuizBtn" class="btn" onclick="next()">Next Question</a>
                                   </div>
                             </form>
-                          </div>
+                        </div>
                     </div>
                 </di>
             </div>
@@ -55,6 +60,160 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <script>
+        const webQuiz = [
+                            {
+                                question: 'What does HTML stand for?',
+                                options: ['Hyper Tag Markup Language', 'Hyper Text Markup Language', 'Hyperlinks Text Mark Language', 'Hyperlinking Text Marking Language'],
+                                correctOption: 'Hyper Text Markup Language'
+                            },
+                            {
+                                question: 'Where should a CSS file be referenced in a HTML file?',
+                                options: ['Before any HTML code', 'After all HTML code', 'Inside the head section', 'Inside the body section'],
+                                correctOption: 'Inside the head section'
+                            },
+                            {
+                                question: 'What is the correct format for aligning written content to the center of the page in CSS?',
+                                options: ['Text-align:center;', 'Font-align:center;', 'Text:align-center;', 'Font:align-center;'],
+                                correctOption: 'Text-align:center;'
+                            },
+                            {
+                                question: 'What is the correct tag for a line break?',
+                                options: ['brk /', 'line /', 'line /bk /', 'br /'],
+                                correctOption: 'br /'
+                            },
+                            {
+                                question: 'Which of these is a genuine tag keyword?',
+                                options: ['header', 'bols', 'body', 'br /'],
+                                correctOption: 'body'
+                            }
+                        ];
+    let questionNumber = 0;
+
+    $(document).ready(function (){
+        const q = question(questionNumber);
+
+        $('.totalQ').html(webQuiz.length);
+        $('.currentQ').html(questionNumber+1);
+        $('.question').html(q.question);
+        q.options.forEach((option, i) => {
+            const opt = `   <div class="col-6 mb-3 text-left">
+                                <div class="custom-control custom-checkbox bg-secondary" value="${option}" id="customControl${i+1}">
+                                    <input type="checkbox" class="custom-control-input"  value="${option}" onclick="checkAnswer(this)" id="customCheck${i+1}">
+                                    <label class="custom-control-label" for="customCheck${i+1}">${option}</label>
+                                </div>
+                            </div>`
+            $('#options').append(opt);
+        })
+        $('#nextQuizBtn').addClass('btn-secondary disabled')
+    });
+
+    let next = function (){
+
+        console.log(questionNumber);
+        nextQuestion(questionNumber);
+        console.log(questionNumber);
+    }
+
+    function nextQuestion(no){
+        $('#nextQuizBtn').removeClass('btn-primary').addClass('btn-secondary disabled');
+        questionNumber = no + 1;
+        if(questionNumber < 5) {
+            $('.currentQ').html(questionNumber+1);
+            const currentQ = question(questionNumber);
+            $('.question').html(currentQ.question);
+            $('#options').html('');
+
+            $.each(currentQ.options, function(i, option){
+                const opt = `<div class="col-6 mb-3 p-2 text-left">
+                                <div class="custom-control custom-checkbox bg-secondary" value="${option}" id="customControl${i+1}">
+                                    <input type="checkbox" class="custom-control-input" value="${option}" onclick="checkAnswer(this)"  id="customCheck${i+1}">
+                                    <label class="custom-control-label" for="customCheck${i+1}">${option}</label>
+                                </div>
+                            </div>`
+                $('#options').append(opt);
+            })
+            if(questionNumber === 4) {
+                $('#nextQuizBtn').html('Submit').attr('onclick', 'endQuiz()');;
+            }
+        } else {
+            endQuiz();
+        }
+    }
+
+    function question(no) {
+        return {
+            question: webQuiz[no].question,
+            options: webQuiz[no].options,
+            correctOption: webQuiz[no].correctOption
+        };
+    }
+
+    function endQuiz(){
+        $('.endQuiz').html('');
+        let leadText = '';
+        if(score <= 40){
+            let leadText = 'Thank you for trying';
+        } else {
+            let leadText = "You've done very well";
+        }
+        const message = `
+                        <div class="jumbotron">
+                            <h1 class="display-4">Quiz is over!</h1>
+                            <p class="lead">${leadText}</p>
+                            <hr class="my-4">
+                            <div class="h-25 w-25 rounded-circle">It uses utility classes for typography and spacing to space content out within the larger container.</div>
+                            <a class="btn btn-primary btn-lg" href="#" role="button">Try Again!</a>
+                        </div>
+                        `;
+        $('.endQuiz').html(message);
+        console.log('it is finished');
+    }
+
+    var score = 0;
+    var progressScore = 0;
+    var errorProgressScore = 20;
+
+    function checkAnswer(e){
+        $('#nextQuizBtn').removeClass('btn-secondary disabled').addClass('btn-primary');
+        console.log($(e).val());
+        let i = $(e).data('id');
+        if(webQuiz[questionNumber].correctOption === $(e).val()){
+            console.log('correct');
+            $(e).parent().remove("bg-secondary");
+            $(e).parent().addClass("border border-success bg-success");
+            score = score + 20;
+            progressScore = 20;
+            $('.score').html(score);
+            const progress = `<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="${progressScore}" aria-valuemin="0" aria-valuemax="100" style="width: ${progressScore}%"></div>`
+            $('.progress').append(progress);
+            console.log(score);
+        } else {
+            console.log('wrong');
+            $(e).parent().remove("bg-secondary");
+            $(e).parent().addClass("border border-danger bg-danger");
+            const errorProgress = `<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="${errorProgressScore}" aria-valuemin="0" aria-valuemax="100" style="width: ${errorProgressScore}%"></div>`
+            $('.progress').append(errorProgress);
+        }
+    }
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <script src="script.js"></script>
 </body>
 </html>
