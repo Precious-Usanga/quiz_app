@@ -14,41 +14,45 @@
         <section>
             <div class="container py-4">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-center h1">
-                             Web Quiz
+                    <div class="col-md-12 endQuiz">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center h1">
+                                     Web Quiz
+                                </div>
+                                <p class="text-center h4">Attempt all questions carefully.. They're Easy!</p>
+                            </div>
                         </div>
-                        <p class="text-center h4">Attempt all questions carefully.. They're Easy!</p>
+                        <di class="row">
+                            <div class="col-12">
+                                <div>YOUR SCORE: <span class="badge badge-light score">0</span> </div>
+        
+                                <button type="button" class="btn btn-primary">
+                                    Question <span class="badge badge-light currentQ"></span> of <span class="totalQ"></span>
+                                </button>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                                </div>
+                                
+                                <div class="card my-5">
+                                    <form>
+                                        <div class="card-body text-center py-5 bg-light">
+                                            <h5 class="card-title question" style="font-size:2rem;"></h5>
+                                              <div class="row justify-content-center">
+                                                  <div class="col-md-9">
+                                                     <div class="row py-3 my-3" id="options">
+                                                        
+                                                     </div>
+                                                  </div>
+                                              </div>
+                                            <a id="nextQuizBtn" class="btn" onclick="next()">Next Question</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </di>
                     </div>
                 </div>
-                <di class="row">
-                    <div class="col-12 endQuiz">
-                        <div>YOUR SCORE: <span class="badge badge-light score">0</span> </div>
-
-                        <button type="button" class="btn btn-primary">
-                            Question <span class="badge badge-light currentQ"></span> of <span class="totalQ"></span>
-                        </button>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                        </div>
-                        
-                        <div class="card my-5">
-                            <form>
-                                <div class="card-body text-center py-5 bg-light">
-                                    <h5 class="card-title question" style="font-size:2rem;"></h5>
-                                      <div class="row justify-content-center">
-                                          <div class="col-md-9">
-                                             <div class="row py-3 my-3" id="options">
-                                                
-                                             </div>
-                                          </div>
-                                      </div>
-                                    <a id="nextQuizBtn" class="btn" onclick="next()">Next Question</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </di>
             </div>
         </section>
     </main>

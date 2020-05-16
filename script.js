@@ -105,7 +105,7 @@ function endQuiz(){
        bgStyle = 'border-success';
    }
    const message = `
-                   <div class="jumbotron text-center">
+                   <div class="jumbotron text-center mt-5">
                        <h1 class="display-4">Quiz is over!</h1>
                        <p class="lead">${leadText}</p>
                        <hr class="my-4">
